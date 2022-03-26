@@ -59,16 +59,24 @@ class ApplicationContextAssertTests {
 	void cleanup() {
 		this.context.close();
 		this.parent.close();
-	}
+	} 
 
     @Test
-	void createWhenHasApplicationContextShouldSetActual() {
-        this.context.registerSingleton("foo", Foo.class);
+	void testWhenBeanShouldBePass() {
+		this.context.registerSingleton("foo", Foo.class);
 		assertThat(getAssert(this.context)).hasBean("foo");
-		assertThat(getAssert(this.context).getSourceApplicationContext()).isSameAs(this.context); 
-        assertThat(getAssert(this.failure)).getFailure().isSameAs(this.failure);
+	}
+    @Test
+	void createWhenHasApplicationContextShouldSetActual() {
+		assertThat(getAssert(this.context).getSourceApplicationContext()).isSameAs(this.context);
+	}
+	@Test
+	void testWhenHasExceptionShouldSetFailure() {
+		assertThat(getAssert(this.failure)).getFailure().isSameAs(this.failure);
+	}
+	
 
-	} 
+
 
 	@Test
 	void hasBeanWhenHasNoBeanShouldFail() {
