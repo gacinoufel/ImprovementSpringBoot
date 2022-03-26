@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.ResourceBundle;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -88,20 +89,39 @@ class ConfigDataEnvironmentContributor implements Iterable<ConfigDataEnvironment
 	 * @param configDataOptions any config data options that should apply
 	 * @param children the children of this contributor at each {@link ImportPhase}
 	 */
-	ConfigDataEnvironmentContributor(Kind kind, ConfigDataLocation location, ConfigDataResource resource,
-			boolean fromProfileSpecificImport, PropertySource<?> propertySource,
-			ConfigurationPropertySource configurationPropertySource, ConfigDataProperties properties,
+	ConfigDataEnvironmentContributor(boolean fromProfileSpecificImport, PropertySource<?> propertySource,
 			ConfigData.Options configDataOptions, Map<ImportPhase, List<ConfigDataEnvironmentContributor>> children) {
-		this.kind = kind;
-		this.location = location;
-		this.resource = resource;
+		this.kind = null;
+		this.location = null;
+		this.resource = null;
 		this.fromProfileSpecificImport = fromProfileSpecificImport;
-		this.properties = properties;
-		this.propertySource = propertySource;
-		this.configurationPropertySource = configurationPropertySource;
+		this.properties = null;
+		this.propertySource = null;
+		this.configurationPropertySource = null;
 		this.configDataOptions = (configDataOptions != null) ? configDataOptions : ConfigData.Options.NONE;
 		this.children = (children != null) ? children : Collections.emptyMap();
-	}
+	} 
+
+    SetKind(Kind kind) {
+        this.kind=kind ; 
+    } 
+
+    SetResource(ConfigDataResource source) {
+        this.resource=resource ; 
+    } 
+
+    SetLocation(ConfigDataLocation location) {
+        this.location=location; 
+    } 
+
+    SetProperties(ConfigDataProperties properties) {
+        this.properties=properties; 
+    } 
+
+    SetPropertySource(ConfigurationPropertySource configurationPropertySource){
+        this.propertySource=configurationPropertySource; 
+    }   
+    
 
 	/**
 	 * Return the contributor kind.
