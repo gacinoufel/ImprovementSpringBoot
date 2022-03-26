@@ -60,8 +60,7 @@ class ConfigDataProperties {
 		this(imports, activate, Collections.emptyList());
 	}
 
-	private ConfigDataProperties(List<ConfigDataLocation> imports, Activate activate,
-			List<ConfigurationProperty> boundProperties) {
+	private ConfigDataProperties(List<ConfigDataLocation> imports, Activate activate) {
 		this.imports = (imports != null) ? imports : Collections.emptyList();
 		this.activate = activate;
 	}
