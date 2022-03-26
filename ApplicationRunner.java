@@ -37,6 +37,6 @@ public interface ApplicationRunner {
 	 * @param args incoming application arguments
 	 * @throws Exception on error
 	 */
-	void run(ApplicationArguments args) throws Exception;
+	void run(ApplicationArguments args) throws ApplicationRunnerException(String msg);
 
 }
