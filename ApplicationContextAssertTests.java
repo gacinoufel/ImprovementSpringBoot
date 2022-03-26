@@ -68,7 +68,7 @@ class ApplicationContextAssertTests {
 		assertThat(getAssert(this.context).getSourceApplicationContext()).isSameAs(this.context); 
         assertThat(getAssert(this.failure)).getFailure().isSameAs(this.failure);
 
-	}
+	} 
 
 	@Test
 	void hasBeanWhenHasNoBeanShouldFail() {
