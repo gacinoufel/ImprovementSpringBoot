@@ -357,40 +357,56 @@ public class AutoConfigurationImportSelector implements DeferredImportSelector, 
 
 		private final List<AutoConfigurationImportFilter> filters;
 
+		private String[] candidates; 
+		private long startTime = System.nanoTime();
+		List<String> configResult = new ArrayList<>(candidates.length); 
+		
 		ConfigurationClassFilter(ClassLoader classLoader, List<AutoConfigurationImportFilter> filters) {
 			this.autoConfigurationMetadata = AutoConfigurationMetadataLoader.loadMetadata(classLoader);
 			this.filters = filters;
 		}
 
-		List<String> filter(List<String> configurations) {
-			long startTime = System.nanoTime();
-			String[] candidates = StringUtils.toStringArray(configurations);
-			boolean skipped = false;
-			for (AutoConfigurationImportFilter filter : this.filters) {
-				boolean[] match = filter.match(candidates, this.autoConfigurationMetadata);
-				for (int i = 0; i < match.length; i++) {
-					if (!match[i]) {
-						candidates[i] = null;
-						skipped = true;
-					}
-				}
-			}
-			if (!skipped) {
-				return configurations;
-			}
-			List<String> result = new ArrayList<>(candidates.length);
-			for (String candidate : candidates) {
-				if (candidate != null) {
-					result.add(candidate);
-				}
-			}
-			if (logger.isTraceEnabled()) {
-				int numberFiltered = configurations.size() - result.size();
-				logger.trace("Filtered " + numberFiltered + " auto configuration class in "
-						+ TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime) + " ms");
-			}
-			return result;
-		}
+		
+
+
+List<String> filter(List<String> configurations) {
+			this.candidates = StringUtils.toStringArray(configurations);
+			boolean skipped = false; 
+            filterConfig(skipped);
+            filterResult();
+			
+		} 
+
+        List<String> filterConfig(boolean skipped) { 
+            for (AutoConfigurationImportFilter filter : this.filters) {
+                boolean[] match = filter.match(candidates, this.autoConfigurationMetadata);
+                for (int i = 0; i < match.length; i++) {
+                    if (!match[i]) {
+                        this.candidates[i] = null;
+                        skipped = true;
+                    }
+                }
+            }
+            if (!skipped) {
+                return configurations;
+            }
+        }
+        
+        
+List<String> filterResult() { 
+    for (String candidate : candidates) {
+        if (candidate != null) {
+            result.add(candidate);
+            }
+    }
+    if (logger.isTraceEnabled()) {
+        int numberFiltered = configurations.size() - configResult.size();
+        logger.trace("Filtered " + numberFiltered + " auto configuration class in "
+            + TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - this.startTime) + " ms");
+    }
+    return configResult;
+    }
+}
 
 	}
 
