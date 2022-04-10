@@ -76,13 +76,11 @@ public class TomcatReactiveWebServerFactory extends AbstractReactiveWebServerFac
 
 	private List<LifecycleListener> serverLifecycleListeners = getDefaultServerLifecycleListeners();
 
-	private Set<TomcatContextCustomizer> tomcatContextCustomizers = new LinkedHashSet<>();
+	private Set<TomcatConnectorCustomizer> tomcatConnectorCustomizers = new LinkedHashSet<>(); 
 
-	private Set<TomcatConnectorCustomizer> tomcatConnectorCustomizers = new LinkedHashSet<>();
+	private Set<TomcatProtocolHandlerCustomizer<?>> tomcatProtocolHandlerCustomizers = new LinkedHashSet<>(); 
 
-	private Set<TomcatProtocolHandlerCustomizer<?>> tomcatProtocolHandlerCustomizers = new LinkedHashSet<>();
-
-	private final List<Connector> additionalTomcatConnectors = new ArrayList<>();
+	private final List<Connector> additionalTomcatConnectors = new ArrayList<>(); 
 
 	private String protocol = DEFAULT_PROTOCOL;
 
