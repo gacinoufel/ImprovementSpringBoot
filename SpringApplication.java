@@ -572,10 +572,10 @@ public class SpringApplication {
 					this.beanNameGenerator);
 		}
 		if (this.resourceLoader != null) { 
-			if (context instanceof GenericApplicationContext) {
+			if (context.isGenericApplicationContext()) {
 				((GenericApplicationContext) context).setResourceLoader(this.resourceLoader);
 			}
-			if (context instanceof DefaultResourceLoader) {
+			if (context.isDefaultResourceLoader()) {
 				((DefaultResourceLoader) context).setClassLoader(this.resourceLoader.getClassLoader());
 			}
 		}
