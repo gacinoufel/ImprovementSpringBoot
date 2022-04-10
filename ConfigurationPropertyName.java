@@ -400,30 +400,23 @@ public final class ConfigurationPropertyName implements Comparable<Configuration
 	}
 
 	private boolean dashIgnoringElementEquals(Elements e1, Elements e2, int i) {
-		int l1 = e1.getLength(i);
-		int l2 = e2.getLength(i);
+		
+		int l1=0;
+		int l2 = 0;
 		int i1 = 0;
 		int i2 = 0;
-		while (i1 < l1) {
-			if (i2 >= l2) {
-				return false;
-			}
-			char ch1 = e1.charAt(i, i1);
-			char ch2 = e2.charAt(i, i2);
-			if (ch1 == '-') {
-				i1++;
-			}
-			else if (ch2 == '-') {
-				i2++;
-			}
-			else if (ch1 != ch2) {
-				return false;
-			}
-			else {
-				i1++;
-				i2++;
-			}
-		}
+		extractedElements(e1, e2, i, l1, l2, i1, i2);
+		return extracted(e2, i, l2, i2);
+	}
+
+	/**
+	 * @param e2
+	 * @param i
+	 * @param l2
+	 * @param i2
+	 * @return 
+	 */
+	private boolean extracted(Elements e2, int i, int l2, int i2) {
 		if (i2 < l2) {
 			if (e2.getType(i).isIndexed()) {
 				return false;
@@ -437,6 +430,37 @@ public final class ConfigurationPropertyName implements Comparable<Configuration
 			while (i2 < l2);
 		}
 		return true;
+	}
+
+	/**
+	 * @param e1
+	 * @param e2
+	 * @param i
+	 * @param l1
+	 * @param l2
+	 * @param i1
+	 * @param i2
+	 * @return 
+	 */
+	private boolean extractedElements(Elements e1, Elements e2, int i, int l1, int l2, int i1, int i2) {
+		while (i1 < l1) { 
+			char ch1 = e1.charAt(i, i1);
+			char ch2 = e2.charAt(i, i2);
+			if (i2 >= l2 || ch1 != ch2) {
+				return false;
+			}
+			if (ch1 == '-') {
+				i1++;
+			}
+			else if (ch2 == '-') {
+				i2++;
+			}
+			else {
+				i1++;
+				i2++;
+			}
+		}
+		return true; 
 	}
 
 	private boolean defaultElementEquals(Elements e1, Elements e2, int i) {
