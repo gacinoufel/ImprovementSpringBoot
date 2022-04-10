@@ -117,9 +117,13 @@ public class GenericApplicationContext  {
 	 */
 	public GenericApplicationContext() {
 		this.beanFactory = new DefaultListableBeanFactory();
-	} 
+	}
 
-    
+
+    public boolean isGenericApplicationContext { 
+        return true;
+    }
+
 	/**
 	 * Create a new GenericApplicationContext with the given DefaultListableBeanFactory.
 	 * @param beanFactory the DefaultListableBeanFactory instance to use for this context
