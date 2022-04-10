@@ -73,7 +73,11 @@ public class DefaultResourceLoader {
 	public DefaultResourceLoader(@Nullable ClassLoader classLoader) {
 		this.classLoader = classLoader;
 	}
-    
+
+
+    public boolean isDefaultResourceLoader() { 
+        return true;
+    }
 
 	/**
 	 * Specify the ClassLoader to load class path resources with, or {@code null}
